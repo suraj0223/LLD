@@ -63,9 +63,6 @@
 
 ### VehicleFactory
 - [+] createVehicle(VehicleType type, String licensePlate) : Vehicle
-- [+] createCompact(String licensePlate) : Vehicle
-- [+] createRegular(String licensePlate) : Vehicle
-- [+] createLarge(String licensePlate) : Vehicle
 
 ---
 
