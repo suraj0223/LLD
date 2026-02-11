@@ -21,7 +21,6 @@
 - [-] static ParkingLot INSTANCE
 - [+] static getInstance() : ParkingLot
 - [+] addLevels(ParkingLevel level) : void
-- [+] findParkingSpot(Vehicle vehicle) : ParkingSpot
 - [+] parkVehicle(Vehicle vehicle) : Ticket
 - [+] freeSpot(Ticket ticket) : void
 - [+] removeVehicle(Ticket ticket, PaymentStrategy paymentStrategy) : void
@@ -34,8 +33,10 @@
 - [+] getParkingSpots() : List&lt;ParkingSpot&gt;
 
 ### ParkingSpot
+- [-] String spotId
 - [-] SpotType spotType
 - [-] Vehicle vehicle (null when available; occupancy derived from this)
+- [+] getSpotId() : String
 - [+] isAvailable() : boolean
 - [+] isOccupied() : boolean
 - [+] canFitVehicle(Vehicle vehicle) : boolean
