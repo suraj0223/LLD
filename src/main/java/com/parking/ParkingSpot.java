@@ -8,8 +8,16 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ParkingSpot {
+  private String spotId;
   private SpotType spotType;
   private Vehicle vehicle;
+
+  public ParkingSpot(String spotId, SpotType spotType) {
+    this.spotId = spotId;
+    this.spotType = spotType;
+  }
+
+  public String getSpotId() { return spotId; }
 
   public boolean isAvailable() {
     return this.vehicle == null;

@@ -3,7 +3,7 @@ package com.parking;
 public class Main {
 
   public static void main(String[] args) {
-    ParkingLot parkingLot = ParkingLot.getInstance();
+    ParkingLotService parkingLot = ParkingLotService.getInstance();
 
     ParkingLevel level1 = new ParkingLevel();
     level1.addParkingSpot(new ParkingSpot(SpotType.COMPACT, null));
