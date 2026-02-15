@@ -42,7 +42,7 @@ Expense
 - amount: Int
 - paidBy: User
 - splitType: SplitType
-- borrowers: List<Split>
+- borrowers: List<Split>    ->> IMPORTANT -->> Look closely why we did that. 
 - expenseType: ExpenseType
 
 -----------------------------------------
