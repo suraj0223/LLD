@@ -6,15 +6,24 @@ import lombok.Getter;
 public class GameService {
 
     private final Board board;
-    private Symbol currentTurn;
+    private final Player playerX;
+    private final Player playerO;
+    private Player currentPlayer;
 
-    public GameService(int size) {
-        board = new Board(size);
-        currentTurn = Symbol.X;
+    public GameService(int size, Player playerX, Player playerO) {
+        this.board = Board.getInstance(size);
+        this.playerX = playerX;
+        this.playerO = playerO;
+        this.currentPlayer = playerX;
+    }
+
+    public MoveResult playTurn() {
+        int[] move = currentPlayer.nextMove(board);
+        return makeMove(move[0], move[1]);
     }
 
     public MoveResult makeMove(int row, int col) {
-        board.placePiece(row, col, currentTurn);
+        board.placePiece(row, col, currentPlayer.getSymbol());
 
         if (hasWon(row, col)) {
             return MoveResult.WIN;
@@ -35,7 +44,7 @@ public class GameService {
     }
 
     private boolean isRowComplete(int row) {
-        Symbol s = currentTurn;
+        Symbol s = currentPlayer.getSymbol();
         for (int c = 0; c < board.getSize(); c++) {
             if (board.getSymbol(row, c) != s) {
                 return false;
@@ -45,7 +54,7 @@ public class GameService {
     }
 
     private boolean isColumnComplete(int col) {
-        Symbol s = currentTurn;
+        Symbol s = currentPlayer.getSymbol();
         for (int r = 0; r < board.getSize(); r++) {
             if (board.getSymbol(r, col) != s) {
                 return false;
@@ -55,7 +64,7 @@ public class GameService {
     }
 
     private boolean isMainDiagonalComplete() {
-        Symbol s = currentTurn;
+        Symbol s = currentPlayer.getSymbol();
         for (int i = 0; i < board.getSize(); i++) {
             if (board.getSymbol(i, i) != s) {
                 return false;
@@ -65,7 +74,7 @@ public class GameService {
     }
 
     private boolean isAntiDiagonalComplete() {
-        Symbol s = currentTurn;
+        Symbol s = currentPlayer.getSymbol();
         int size = board.getSize();
         for (int i = 0; i < size; i++) {
             if (board.getSymbol(i, size - 1 - i) != s) {
@@ -76,7 +85,7 @@ public class GameService {
     }
 
     private void switchTurn() {
-        currentTurn = (currentTurn == Symbol.X) ? Symbol.O : Symbol.X;
+        currentPlayer = (currentPlayer == playerX) ? playerO : playerX;
     }
 
 }

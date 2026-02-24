@@ -10,24 +10,24 @@ public class Main {
         System.out.print("Enter board size (n for n x n, minimum 3): ");
         int size = scanner.nextInt();
 
-        GameService game = new GameService(size);
+        Board.reset();
+        Player playerX = new Player(Symbol.X, new HumanMoveStrategy(scanner));
+        Player playerO = new Player(Symbol.O, new RandomMoveStrategy());
+
+        GameService game = new GameService(size, playerX, playerO);
 
         System.out.println("=== Tic-Tac-Toe (" + size + "x" + size + ") ===");
         printBoard(game.getBoard());
 
         while (true) {
-            System.out.println("Player " + game.getCurrentTurn() + "'s turn.");
-            System.out.print("Enter row (0-" + (size - 1) + "): ");
-            int row = scanner.nextInt();
-            System.out.print("Enter col (0-" + (size - 1) + "): ");
-            int col = scanner.nextInt();
+            System.out.println("Player " + game.getCurrentPlayer().getSymbol() + "'s turn.");
 
             try {
-                MoveResult result = game.makeMove(row, col);
+                MoveResult result = game.playTurn();
                 printBoard(game.getBoard());
 
                 if (result == MoveResult.WIN) {
-                    System.out.println("Player " + game.getBoard().getSymbol(row, col) + " wins!");
+                    System.out.println("Player " + game.getCurrentPlayer().getSymbol() + " wins!");
                     break;
                 } else if (result == MoveResult.DRAW) {
                     System.out.println("It's a draw!");

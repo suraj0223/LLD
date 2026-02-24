@@ -5,15 +5,28 @@ import lombok.Getter;
 @Getter
 public class Board {
 
+    private static Board instance;
+
     private final Symbol[][] grid;
     private final int size;
 
-    public Board(int size) {
+    private Board(int size) {
         if (size < 3) {
             throw new IllegalArgumentException("Board size must be at least 3");
         }
         this.size = size;
         this.grid = new Symbol[size][size];
+    }
+
+    public static Board getInstance(int size) {
+        if (instance == null) {
+            instance = new Board(size);
+        }
+        return instance;
+    }
+
+    public static void reset() {
+        instance = null;
     }
 
     public void placePiece(int row, int col, Symbol symbol) {
