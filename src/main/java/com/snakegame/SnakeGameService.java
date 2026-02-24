@@ -5,7 +5,7 @@ import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
 
-public class SnakeGameImpl implements SnakeGame{
+public class SnakeGameService implements SnakeGame{
   private int row;
   private int col;
   private final Deque<Point> snake;
@@ -15,7 +15,7 @@ public class SnakeGameImpl implements SnakeGame{
   private int moveCount;
 
 
-  public SnakeGameImpl(int row, int col) {
+  public SnakeGameService(int row, int col) {
     this.row = row;
     this.col = col;
 

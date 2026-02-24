@@ -15,7 +15,7 @@ interface SnakeGame {
 public class Main {
 
   public static void main(String[] args) {
-    SnakeGameImpl snakeGame = new SnakeGameImpl(10, 10);
+    SnakeGameService snakeGame = new SnakeGameService(10, 10);
 
     System.out.print("Game Started! \n");
 
