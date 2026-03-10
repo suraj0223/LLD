@@ -30,7 +30,8 @@ public class InMemoryCache<K, V> {
     }
     
     public void put(K key, V value, long expiration) {
-        map.put(key, new CacheValue<>(value, expiration));
+        long expiryTime = expiration == -1 ? -1 : System.currentTimeMillis() + expiration;
+        map.put(key, new CacheValue<>(value, expiryTime));
     }
 
     public V get(K key) {

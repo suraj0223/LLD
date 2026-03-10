@@ -1,6 +1,6 @@
 package com.inmemory_key_value;
 
-public class Demo {
+public class Main {
     public static void main(String[] args) throws InterruptedException {
         InMemoryCache<String, String> cache = new InMemoryCache<>(1000);
         
