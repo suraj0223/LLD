@@ -10,9 +10,8 @@ public class Main {
     // With BUCKET_CAPACITY = 2 and REFILL_RATE = 1000 (1 token per second),
     // rapid calls should only allow 2 requests before rate limiting
     for (int i = 0; i < 10; i++) {
-      System.out.println(rateLimiterService.rateLimit("Customer 1")
-        + " : Customer 1" + " : " + System.currentTimeMillis());
-
+      boolean rateLimit = rateLimiterService.rateLimit("Customer 1");
+      System.out.println( rateLimit + " : Customer 1" + " : " + System.currentTimeMillis());
       Thread.sleep(1000);
     }
   }
