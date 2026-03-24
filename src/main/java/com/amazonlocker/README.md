@@ -4,7 +4,7 @@
 1. Locker should have multiple compartments.
 2. Each compartment would have different size. (Small, medium, large) 
 3. Packages are stored in compartment according to the package and compartment size. 
-4. when paced the package successfully in compartment(if vacant and valid size)
+4. when placed the package successfully in compartment(if vacant and valid size)
     a new access token is generated and send to receiver. 
 5. Access token will expire after 7 days and then if package in locker, we have to manually remove it. 
 6. Receiver enters the access key and successfully retrieve the packege. 
