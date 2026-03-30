@@ -11,7 +11,7 @@ public class InMemoryCache<K, V> {
 
     public InMemoryCache(long cleanupIntervalMillis) {
         this.map = new ConcurrentHashMap<>();
-        this.cleaner = Executors.newScheduledThreadPool(10);
+        this.cleaner = Executors.newSingleThreadScheduledExecutor();
         startCleanupTask(cleanupIntervalMillis);
     }
 
@@ -29,13 +29,21 @@ public class InMemoryCache<K, V> {
         }, intervalMillis, intervalMillis, TimeUnit.MILLISECONDS);
     }
     
-    public void put(K key, V value, long expiration) {
-        long expiryTime = expiration == -1 ? -1 : System.currentTimeMillis() + expiration;
+    public void put(K key, V value, long expirationMillis) {
+        long expiryTime = expirationMillis == -1 ? -1 : System.currentTimeMillis() + expirationMillis;
         map.put(key, new CacheValue<>(value, expiryTime));
     }
 
     public V get(K key) {
-        return map.get(key).getValue();
+        CacheValue<V> cacheValue = map.get(key);
+        if (cacheValue == null) {
+            return null;
+        }
+        if (cacheValue.isExpired()) {
+            map.remove(key, cacheValue);
+            return null;
+        }
+        return cacheValue.getValue();
     }
 
     public void delete(K key) {
