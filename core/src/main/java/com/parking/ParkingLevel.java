@@ -12,7 +12,7 @@ public class ParkingLevel {
 
   public ParkingSpot getParkingSpot(Vehicle vehicle) {
     for (ParkingSpot spot : parkingSpots) {
-      if (!spot.isOccupied() && spot.canFitVehicle(vehicle)) {
+      if (spot.isOccupied() && spot.canFitVehicle(vehicle)) {
         return spot;
       }
     }

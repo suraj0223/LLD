@@ -41,7 +41,7 @@ public class ParkingLotService {
   public Ticket parkVehicle(Vehicle vehicle) {
     for (ParkingLevel level : parkingLevels) {
       for (ParkingSpot spot : level.getParkingSpots()) {
-        if (!spot.isOccupied() && spot.canFitVehicle(vehicle)) {
+        if (spot.isOccupied() && spot.canFitVehicle(vehicle)) {
           ReentrantLock lock = getLock(spot);
           lock.lock();
           try {

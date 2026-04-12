@@ -17,9 +17,7 @@ public class ParkingSpot {
     this.spotType = spotType;
   }
 
-  public String getSpotId() { return spotId; }
-
-  public boolean isAvailable() {
+    public boolean isAvailable() {
     return this.vehicle == null;
   }
 
