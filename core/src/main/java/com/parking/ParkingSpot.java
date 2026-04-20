@@ -43,8 +43,4 @@ public class ParkingSpot {
     this.vehicle = null;
   }
 
-  public Vehicle getVehicle() {
-    return this.vehicle;
-  }
-
 }
