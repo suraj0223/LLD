@@ -1,5 +1,7 @@
 package com.parking;
 
+import lombok.experimental.StandardException;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,20 +43,26 @@ public class ParkingLotService {
   public Ticket parkVehicle(Vehicle vehicle) {
     for (ParkingLevel level : parkingLevels) {
       for (ParkingSpot spot : level.getParkingSpots()) {
-        if (spot.isOccupied() && spot.canFitVehicle(vehicle)) {
-          ReentrantLock lock = getLock(spot);
-          lock.lock();
+        ReentrantLock lock = getLock(spot);
+        // 1. Try to acquire the lock immediately without waiting
+        if (lock.tryLock()) {
           try {
-            if (spot.assignVehicle(vehicle)) {
-              return new Ticket(vehicle, spot);
+            // 2. NOW it is safe to check-then-act inside the lock
+            if (!spot.isOccupied() && spot.canFitVehicle(vehicle)) {
+              if (spot.assignVehicle(vehicle)) {
+                return new Ticket(vehicle, spot);
+              }
             }
           } finally {
+            // 3. Always unlock in the finally block
             lock.unlock();
           }
         }
+        // If tryLock() returned false, another thread is trying to park here.
+        // We safely skip it and move to the next spot loop iteration.
       }
     }
-    return null;
+    return null; // No available spots found
   }
 
   /** Frees the spot associated with the ticket. */
